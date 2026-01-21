@@ -22,6 +22,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get version from tag
+        id: get_version
+        run: |
+          $version = "${{ github.ref_name }}" -replace '^v', ''
+          echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "Version: $version"
+        shell: pwsh
+
+      - name: Update tauri.conf.json version
+        run: |
+          $configPath = "src-tauri/tauri.conf.json"
+          $json = Get-Content $configPath -Raw | ConvertFrom-Json
+          $json.version = "${{ steps.get_version.outputs.VERSION }}"
+          $json | ConvertTo-Json -Depth 10 | Set-Content $configPath -NoNewline
+          Write-Host "Updated version to ${{ steps.get_version.outputs.VERSION }}"
+        shell: pwsh
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -41,29 +58,36 @@ jobs:
         with:
           workspaces: './src-tauri -> target'
 
-      # Cache vcpkg packages
-      - name: Cache vcpkg
+      # Cache vcpkg installed packages
+      - name: Cache vcpkg installed
+        id: cache-vcpkg
         uses: actions/cache@v4
         with:
           path: |
-            ${{ github.workspace }}/vcpkg
-            !${{ github.workspace }}/vcpkg/buildtrees
-            !${{ github.workspace }}/vcpkg/downloads
-          key: vcpkg-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.toml') }}
+            ${{ github.workspace }}/vcpkg/installed
+          key: vcpkg-installed-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.toml') }}-v2
           restore-keys: |
-            vcpkg-${{ runner.os }}-
+            vcpkg-installed-${{ runner.os }}-
 
       # Install vcpkg and dependencies for libheif
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgGitCommitId: '3c4706f7aba0155cb34c366b5ef3397e75e0d14e'
+          doNotCache: true
 
       - name: Install vcpkg dependencies
+        if: steps.cache-vcpkg.outputs.cache-hit != 'true'
         run: |
           vcpkg install libheif:x64-windows-static-md libjpeg-turbo:x64-windows-static-md
         env:
           VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+
+      - name: Restore vcpkg installed (if cached)
+        if: steps.cache-vcpkg.outputs.cache-hit == 'true'
+        run: |
+          Write-Host "Using cached vcpkg packages"
+        shell: pwsh
 
       # Install NASM for turbojpeg
       - name: Install NASM
