@@ -1,0 +1,3 @@
+# This folder contains ImageMagick binaries for HEIC support
+# Download ImageMagick portable from: https://imagemagick.org/script/download.php#windows
+# Extract magick.exe and all .dll files here
