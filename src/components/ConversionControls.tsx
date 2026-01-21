@@ -26,7 +26,7 @@ export function ConversionControls() {
     const folder = await open({
       directory: true,
       multiple: false,
-      title: 'Select output folder',
+      title: 'Выберите папку для сохранения',
     });
 
     if (folder && typeof folder === 'string') {
@@ -36,7 +36,7 @@ export function ConversionControls() {
 
   const handleConvertAll = async () => {
     if (!outputFolder) {
-      alert('Please select an output folder first');
+      alert('Сначала выберите папку для сохранения');
       return;
     }
 
@@ -123,7 +123,7 @@ export function ConversionControls() {
           className="shrink-0"
         >
           <FolderOpen className="w-4 h-4 mr-2" />
-          {outputFolder ? 'Change Folder' : 'Select Output Folder'}
+          {outputFolder ? 'Изменить папку' : 'Выбрать папку'}
         </Button>
 
         {outputFolder && (
@@ -139,7 +139,7 @@ export function ConversionControls() {
         <div className="flex items-center gap-3 text-sm px-3">
           {pendingCount > 0 && (
             <span className="font-medium">
-              {pendingCount} ready
+              {pendingCount} готово
             </span>
           )}
           {completedCount > 0 && (
@@ -157,7 +157,7 @@ export function ConversionControls() {
             variant="outline"
             size="sm"
           >
-            Clear Done
+            Очистить готовые
           </Button>
         )}
 
@@ -181,11 +181,11 @@ export function ConversionControls() {
             {isConverting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Converting...
+                Конвертация...
               </>
             ) : (
               <>
-                Convert {pendingCount}
+                Конвертировать {pendingCount}
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

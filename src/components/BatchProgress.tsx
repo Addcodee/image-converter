@@ -25,22 +25,22 @@ export function BatchProgress() {
           <div className="flex items-center justify-between mb-2">
             <div>
               <p className="font-semibold text-sm">
-                Converting {completedFiles} of {totalFiles} images
+                Конвертация {completedFiles} из {totalFiles} изображений
               </p>
               <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
                 {processingFiles > 0 && (
                   <span className="flex items-center gap-1">
                     <Loader2 className="w-3 h-3" />
-                    {processingFiles} processing
+                    {processingFiles} в процессе
                   </span>
                 )}
                 {pendingFiles > 0 && (
-                  <span>• {pendingFiles} pending</span>
+                  <span>• {pendingFiles} в ожидании</span>
                 )}
                 {failedFiles > 0 && (
                   <span className="flex items-center gap-1 text-destructive">
                     <XCircle className="w-3 h-3" />
-                    {failedFiles} failed
+                    {failedFiles} с ошибкой
                   </span>
                 )}
               </div>

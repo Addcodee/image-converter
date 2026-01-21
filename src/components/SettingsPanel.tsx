@@ -13,14 +13,14 @@ export function SettingsPanel() {
     {
       value: 'jpeg',
       label: 'JPEG',
-      description: 'Smaller files',
+      description: 'Меньший размер',
       icon: FileImage,
       color: 'orange',
     },
     {
       value: 'png',
       label: 'PNG',
-      description: 'Lossless quality',
+      description: 'Без потерь',
       icon: FileImage,
       color: 'blue',
     },
@@ -32,7 +32,7 @@ export function SettingsPanel() {
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-primary" />
-          <Label className="text-sm font-semibold">Convert to</Label>
+          <Label className="text-sm font-semibold">Формат</Label>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
@@ -84,7 +84,7 @@ export function SettingsPanel() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <Label htmlFor="quality" className="text-sm font-semibold">
-            Quality
+            Качество
           </Label>
           <span className="text-xl font-bold text-primary tabular-nums">
             {settings.quality}%
@@ -101,11 +101,11 @@ export function SettingsPanel() {
           className="py-2"
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Small</span>
+          <span>Минимум</span>
           <span>
-            {settings.targetFormat === 'png' ? 'PNG: Always 100%' : 'Balance'}
+            {settings.targetFormat === 'png' ? 'PNG: Всегда 100%' : 'Баланс'}
           </span>
-          <span>Large</span>
+          <span>Максимум</span>
         </div>
       </div>
 
@@ -118,10 +118,10 @@ export function SettingsPanel() {
             </div>
             <div className="space-y-1 flex-1">
               <Label htmlFor="metadata" className="text-sm font-semibold cursor-pointer">
-                Keep Metadata
+                Сохранить метаданные
               </Label>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Preserve EXIF data, GPS, and camera settings
+                Сохранить EXIF данные, GPS и настройки камеры
               </p>
             </div>
           </div>

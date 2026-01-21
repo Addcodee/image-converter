@@ -195,13 +195,13 @@ export function FileList() {
                             <div className="w-full h-full flex flex-col items-center justify-center bg-muted gap-2">
                               <Loader2 className="w-12 h-12 text-muted-foreground/50 animate-spin" />
                               <span className="text-xs text-muted-foreground">
-                                {isQueued ? `Queued...` : 'Loading...'}
+                                {isQueued ? `В очереди...` : 'Загрузка...'}
                               </span>
                             </div>
                           ) : imageErrors.has(file.id) ? (
                             <div className="w-full h-full flex flex-col items-center justify-center bg-muted gap-2">
                               <ImageIcon className="w-16 h-16 text-muted-foreground/50" />
-                              <span className="text-xs text-muted-foreground">Preview failed</span>
+                              <span className="text-xs text-muted-foreground">Ошибка превью</span>
                             </div>
                           ) : (
                             <img
@@ -297,7 +297,7 @@ export function FileList() {
                           {/* Estimated Size */}
                           {file.estimatedSize && file.status === 'pending' && (
                             <div className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
-                              Est. size: {formatFileSize(file.estimatedSize)}
+                              Примерный размер: {formatFileSize(file.estimatedSize)}
                             </div>
                           )}
                         </div>

@@ -122,19 +122,19 @@ export function DragDropOverlay() {
             {isLoading ? (
               <>
                 <h2 className="text-4xl font-bold text-white">
-                  Loading images...
+                  Загрузка изображений...
                 </h2>
                 <p className="text-lg text-white/70">
-                  Processing {loadingCount} {loadingCount === 1 ? 'file' : 'files'}
+                  Обработка {loadingCount} {loadingCount === 1 ? 'файла' : 'файлов'}
                 </p>
               </>
             ) : (
               <>
                 <h2 className="text-4xl font-bold text-white">
-                  Drop your file anywhere
+                  Отпустите файлы здесь
                 </h2>
                 <p className="text-lg text-white/70">
-                  Release to upload images
+                  Отпустите для загрузки изображений
                 </p>
               </>
             )}

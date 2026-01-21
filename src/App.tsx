@@ -34,7 +34,7 @@ function App() {
             <div className="p-6 border-b flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Settings className="w-5 h-5 text-primary" />
-                <h2 className="font-semibold text-lg">Settings</h2>
+                <h2 className="font-semibold text-lg">Настройки</h2>
               </div>
               <Button
                 variant="ghost"
@@ -69,16 +69,16 @@ function App() {
           <div className="border-b bg-card px-6 py-4 flex-shrink-0">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold">Image Converter</h1>
+                <h1 className="text-2xl font-bold">Конвертер изображений</h1>
                 <p className="text-sm text-muted-foreground mt-0.5">
-                  Convert images locally on your PC
+                  Конвертируйте изображения локально на вашем ПК
                 </p>
               </div>
               {files.length > 0 && (
                 <div className="text-right">
                   <p className="text-3xl font-bold text-primary">{files.length}</p>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                    {files.length === 1 ? 'image' : 'images'}
+                    {files.length === 1 ? 'изображение' : 'изображений'}
                   </p>
                 </div>
               )}
@@ -101,9 +101,9 @@ function App() {
                     <Upload className="w-12 h-12 text-primary" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">Drop your images here</p>
+                    <p className="text-2xl font-bold">Перетащите изображения сюда</p>
                     <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
-                      Drag & drop JPEG or PNG files from your desktop
+                      Перетащите файлы JPEG, PNG или HEIC с рабочего стола
                     </p>
                   </div>
                 </div>

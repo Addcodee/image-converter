@@ -18,7 +18,7 @@ export function UpdateChecker() {
     checkForUpdates();
   }, []);
 
-  const checkForUpdates = async () => {
+  const checkForUpdates = async (showError = false) => {
     setStatus('checking');
     setError('');
 
@@ -33,8 +33,13 @@ export function UpdateChecker() {
       }
     } catch (err) {
       console.error('Update check failed:', err);
-      setError(err instanceof Error ? err.message : 'Failed to check for updates');
-      setStatus('error');
+      // Silently fail on initial check - only show error if user manually retried
+      if (showError) {
+        setError(err instanceof Error ? err.message : 'Не удалось проверить обновления');
+        setStatus('error');
+      } else {
+        setStatus('idle');
+      }
     }
   };
 
@@ -74,7 +79,7 @@ export function UpdateChecker() {
       await relaunch();
     } catch (err) {
       console.error('Update failed:', err);
-      setError(err instanceof Error ? err.message : 'Update failed');
+      setError(err instanceof Error ? err.message : 'Ошибка обновления');
       setStatus('error');
     }
   };
@@ -89,7 +94,7 @@ export function UpdateChecker() {
         {status === 'checking' && (
           <div className="flex items-center gap-3">
             <RefreshCw className="w-5 h-5 animate-spin text-muted-foreground" />
-            <span className="text-sm">Checking for updates...</span>
+            <span className="text-sm">Проверка обновлений...</span>
           </div>
         )}
 
@@ -97,9 +102,9 @@ export function UpdateChecker() {
           <div className="space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="font-medium">Update available</p>
+                <p className="font-medium">Доступно обновление</p>
                 <p className="text-sm text-muted-foreground">
-                  Version {version} is ready to download
+                  Версия {version} готова к загрузке
                 </p>
               </div>
               <Button
@@ -113,7 +118,7 @@ export function UpdateChecker() {
             </div>
             <Button onClick={downloadAndInstall} className="w-full gap-2">
               <Download className="w-4 h-4" />
-              Download & Install
+              Скачать и установить
             </Button>
           </div>
         )}
@@ -122,7 +127,7 @@ export function UpdateChecker() {
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <Download className="w-5 h-5 text-primary" />
-              <span className="text-sm">Downloading update...</span>
+              <span className="text-sm">Загрузка обновления...</span>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
               <div
@@ -137,7 +142,7 @@ export function UpdateChecker() {
         {status === 'ready' && (
           <div className="flex items-center gap-3">
             <RefreshCw className="w-5 h-5 text-green-500" />
-            <span className="text-sm">Restarting to apply update...</span>
+            <span className="text-sm">Перезапуск для применения обновления...</span>
           </div>
         )}
 
@@ -145,7 +150,7 @@ export function UpdateChecker() {
           <div className="space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="font-medium text-destructive">Update failed</p>
+                <p className="font-medium text-destructive">Ошибка обновления</p>
                 <p className="text-sm text-muted-foreground">{error}</p>
               </div>
               <Button
@@ -157,8 +162,8 @@ export function UpdateChecker() {
                 <X className="w-4 h-4" />
               </Button>
             </div>
-            <Button variant="outline" onClick={checkForUpdates} className="w-full">
-              Try again
+            <Button variant="outline" onClick={() => checkForUpdates(true)} className="w-full">
+              Повторить
             </Button>
           </div>
         )}
