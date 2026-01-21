@@ -1,7 +1,7 @@
 import { useImageStore } from '@/store/imageStore';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import { Loader2, XCircle } from 'lucide-react';
 
 export function BatchProgress() {
   const files = useImageStore((state) => state.files);
