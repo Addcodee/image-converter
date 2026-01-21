@@ -41,6 +41,18 @@ jobs:
         with:
           workspaces: './src-tauri -> target'
 
+      # Cache vcpkg packages
+      - name: Cache vcpkg
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg
+            !${{ github.workspace }}/vcpkg/buildtrees
+            !${{ github.workspace }}/vcpkg/downloads
+          key: vcpkg-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.toml') }}
+          restore-keys: |
+            vcpkg-${{ runner.os }}-
+
       # Install vcpkg and dependencies for libheif
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
